@@ -1,0 +1,62 @@
+<div class="panel panel-primary" *ngFor="let post of posts">
+
+        <div class="panel-heading" [routerLink]="['/detial',post._id]">{{post.post_title}}</div>
+        <div class="panel-body">
+            
+            <div class="alert alert-success" role="alert">description:{{post.post_description}}</div>
+            <div class="well well-sm">createBy:{{post.post_createBy}}</div>
+            <!-- createBy:{{post._id}}<br> -->
+
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" (click)="showcommon(post._id)">comments</button>
+                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span (click)="liked(post._id)">likes</span> 
+                        <span class="badge" (click)="showusersFn(post._id)">{{post.psot_like}} </span> 
+                </button>
+                   
+      
+                <button type="button" class="btn btn-default" (click)="delete(post._id)">delete</button>
+                <button type="button" class="btn btn-default" (click)="editpostFn(post._id)">edit</button>
+                <button type="button" class="btn btn-default" (click)="addcommentFn(post._id)">add comment</button>
+            </div>
+
+            <div *ngIf="showListid===post._id">
+                <div >
+                    <span class="label label-info" *ngFor="let user of post.liked_users">{{user}}</span>
+                </div>
+            </div>
+
+            <div *ngIf="showcomid===post._id">
+                <div  style="border:2px soild; margin: 5px" *ngFor="let comment of post.comments">
+                    <div style="border: 1px solid;margin: 2px">
+                        {{comment.body}}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf=" post._id===curid">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputText">Post tilte</label>
+                        <input type="text" class="form-control" id="exampleInputText" [(ngModel)]="edpost.title"name="title" placeholder="title">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputContent">Post Description</label>
+                        <input type="test" class="form-control" id="exampleInputContent" [(ngModel)]="edpost.description" name="description" placeholder="description">
+                      </div>
+                      <button type="submit" (click)="submitedit(post._id)" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+            <div *ngIf=" post._id===curcmd">
+                <form>
+                    
+                      <div class="form-group">
+                        <label for="exampleInputContent">Post Comment</label>
+                        <input type="test" class="form-control" id="exampleInputContent" [(ngModel)]="commentbody" name="commentbody" placeholder="description">
+                      </div>
+                      <button type="submit" (click)="submitComment(post._id)" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+        <br>
+    
+</div>
